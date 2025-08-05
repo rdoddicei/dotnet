@@ -1,6 +1,5 @@
 name: .NET Shield Service CI/CD Pipeline
 
-# Trigger conditions based on the original GitLab CI configuration
 on:
   push:
     branches:
@@ -15,7 +14,6 @@ on:
       - develop
   workflow_dispatch:
 
-# Environment variables from the original gitlab-ci.yml
 env:
   PROJ_SERVICE_NAME: "vl-shield"
   PROJ_K8S_NAMESPACE_BASE: "shield"
@@ -26,23 +24,17 @@ env:
   TMPL_UNIT_TEST_IMAGE: "mcr.microsoft.com/dotnet/sdk:9.0"
 
 jobs:
-  # Main pipeline job that uses the reusable .NET service workflow
   dotnet-service-pipeline:
     uses: rdoddicei/gitlab-github/.github/workflows/dotnet-service-pipeline.yml@main
     with:
-      # Project-specific variables
       PROJ_SERVICE_NAME: "vl-shield"
       PROJ_K8S_NAMESPACE_BASE: "shield"
       PROJ_HARBOR_DIRECTORY: "dpvl"
       PROJ_SOLUTION_NAME: "DPVL.Shield"
       PROJ_IMAGE_NAME: "dpvl.shield"
       TMPL_DOCKER_FILE_PATH: "./DPVL.Shield.WebService/Dockerfile"
-      
-      # Template variables matching the original GitLab CI
       TMPL_UNIT_TEST_IMAGE: "mcr.microsoft.com/dotnet/sdk:9.0"
       TMPL_SONAR_IMAGE: "harbor.use.ucdp.net/utp_common/upr-dotnet-sonarqube-image:dotnet-sdk-7.0"
-      
-      # GitHub-specific variables that replace GitLab CI variables
       CI_COMMIT_BRANCH: ${{ github.ref_name }}
       CI_DEFAULT_BRANCH: "main"
       CI_MERGE_REQUEST_ID: ${{ github.event.number }}
