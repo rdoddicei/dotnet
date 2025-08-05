@@ -1,0 +1,2 @@
+https://github.com/Universal-Destinations-Experiences/pipeline-migration/blob/main/.github/workflows/reusable-service-dotnet.yml   
+https://github.com/Universal-Destinations-Experiences/dotnet-projects/blob/main/.github/workflows/dotnet-github-workflow.yml
